@@ -10,7 +10,7 @@ class App extends Component {
       <Router>
         <PageContainer>
           <Switch>
-            <Route exact path="/" component={withOidcSecure(Home)} />
+            <Route exact path="/" component={withOidcSecure(Home)} /> {/* withOidcSecure will be depricated soon bruhhh */}
           </Switch>
         </PageContainer>
       </Router>

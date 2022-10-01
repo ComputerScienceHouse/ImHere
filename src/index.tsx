@@ -17,7 +17,7 @@ ReactDOM.render(
   <AuthenticationProvider
     configuration={oidcConfiguration}
     loggerLevel={oidcLog.DEBUG}
-    isEnabled={true}
+    isEnabled={true} // TODO: @rtp and get a funny little sso key
     UserStore={InMemoryWebStorage}
     callbackComponentOverride={LoggingIn}
     authenticating={Authenticating}
