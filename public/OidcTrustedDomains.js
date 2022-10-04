@@ -5,6 +5,6 @@
 
 // Domains used by OIDC server must be also declared here
 const trustedDomains = {
-    default: ["https://sso.csh.rit.edu/auth/realms/csh", "ttps://sso.csh.rit.edu/auth/realms/csh/protocol/openid-connect/token", "https://sso.csh.rit.edu/auth/"]
+    default: ["https://sso.csh.rit.edu/auth/realms/csh", "https://sso.csh.rit.edu/auth/realms/csh/protocol/openid-connect/token", "https://sso.csh.rit.edu/auth/"]
 };
 
