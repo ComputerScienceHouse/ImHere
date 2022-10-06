@@ -1,23 +1,27 @@
 import React from 'react'
-import logo from './logo.svg'
 import './App.css'
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
+import PageContainer from './containers/PageContainer'
+import 'csh-material-bootstrap/dist/csh-material-bootstrap.css'
+import NotFound from './pages/NotFound'
 
-function App() {
+type Props = {
+  rerouteHomeOn404?: boolean
+}
+
+const App: React.FC<Props> = ({ rerouteHomeOn404 = null }) => {
   return (
     <Router>
-      <div>
-        <h1>
-          Hello I am a header.
-        </h1>
-      </div>
-      <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/home' element={<Home/>}/>
-      </Routes>
+      <PageContainer>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='*' element={rerouteHomeOn404 ?? true ? <Home /> : <NotFound />} />
+        </Routes>
+      </PageContainer>
     </Router>
-    )
+  )
 }
 
 export default App

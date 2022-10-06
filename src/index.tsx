@@ -13,11 +13,11 @@ const root = ReactDOM.createRoot(
 // handle security in here, and routing in app
 
 root.render(
-  <OidcProvider 
+  <OidcProvider
     configuration={configuration}
   >
     <OidcSecure>
-      <App/>
+      <App />
     </OidcSecure>
   </OidcProvider>
 )
