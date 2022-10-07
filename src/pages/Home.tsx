@@ -1,5 +1,8 @@
 import { useOidcAccessToken, useOidc, useOidcIdToken } from '@axa-fr/react-oidc'
 import React from 'react'
+import Authenticating from '../callbacks/Authenticating'
+import AuthenticationError from '../callbacks/AuthenticationError'
+import SessionLost from '../callbacks/SessionLost'
 import UserInfo from '../UserInfo'
 
 const Home = () => {
