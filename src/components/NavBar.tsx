@@ -32,6 +32,11 @@ const NavBar: React.FunctionComponent = () => {
                   Home
                 </NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink to='/attendance' className='nav-link'>
+                  Attendance
+                </NavLink>
+              </NavItem>
             </Nav>
             <Nav navbar className='ml-auto'>
               <Profile />

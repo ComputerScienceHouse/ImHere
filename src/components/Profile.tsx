@@ -11,7 +11,6 @@ import UserInfo from '../UserInfo'
 
 const Profile: React.FunctionComponent = () => {
     const { login, logout, isAuthenticated } = useOidc()
-    const { idToken, idTokenPayload } = useOidcIdToken()
     const { accessTokenPayload } = useOidcAccessToken()
     const userInfo = accessTokenPayload as UserInfo
 
@@ -32,8 +31,10 @@ const Profile: React.FunctionComponent = () => {
                 <span className="caret" />
             </DropdownToggle>
             <DropdownMenu>
-                <DropdownItem>Dashboard</DropdownItem>
-                <DropdownItem>Settings</DropdownItem>
+                <DropdownItem href='https://conditional.csh.rit.edu/dashboard/'>Dashboard</DropdownItem>
+                <DropdownItem href='https://members.csh.rit.edu'>Members</DropdownItem>
+                <DropdownItem href='https://conditional.csh.rit.edu/attendance_cm'>Classic Directorship Attendance</DropdownItem>
+                <DropdownItem href='https://conditional.csh.rit.edu/attendance_ts'>Classic Seminar Attendance</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem onClick={() => logout(null)}>Logout</DropdownItem>
             </DropdownMenu>

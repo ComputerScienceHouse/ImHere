@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import PageContainer from './containers/PageContainer'
 import 'csh-material-bootstrap/dist/csh-material-bootstrap.css'
 import NotFound from './pages/NotFound'
+import Attendance from './pages/Attendance'
 
 type Props = {
   rerouteHomeOn404?: boolean
@@ -18,6 +19,7 @@ const App: React.FC<Props> = ({ rerouteHomeOn404 = null }) => {
           <Route path="/" element={<Home />} />
           <Route path='/home' element={<Home />} />
           <Route path='*' element={rerouteHomeOn404 ?? true ? <Home /> : <NotFound />} />
+          <Route path='/attendance' element={<Attendance />} />
         </Routes>
       </PageContainer>
     </Router>
