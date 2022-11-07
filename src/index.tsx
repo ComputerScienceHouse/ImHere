@@ -13,18 +13,27 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 )
 
+const ssoEnabled = true;
+
 // handle security in here, and routing in app
 
 root.render(
-  <OidcProvider
-    configuration={configuration}
-    authenticatingComponent={Authenticating}
-    authenticatingErrorComponent={AuthenticationError}
-    loadingComponent={Loading}
-    sessionLostComponent={SessionLost}
-  >
-    <OidcSecure>
-      <App />
-    </OidcSecure>
-  </OidcProvider>
+  <>
+    {
+      ssoEnabled ?
+        <OidcProvider
+          configuration={configuration}
+          authenticatingComponent={Authenticating}
+          authenticatingErrorComponent={AuthenticationError}
+          loadingComponent={Loading}
+          sessionLostComponent={SessionLost}
+        >
+          < OidcSecure >
+            <App />
+          </OidcSecure >
+        </OidcProvider >
+        : <App />
+    }
+  </>
 )
+

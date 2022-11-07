@@ -2,12 +2,32 @@ import React from 'react'
 import { Card, CardBody, CardSubtitle, CardTitle } from 'reactstrap'
 import './Attendance.tsx.scss'
 import { QrRenderer, } from 'imhere-qgen'
-import { GenPayload, GenV4ECIheader } from 'imhere-qgen/lib/encoding'
+import { GenV4Payload, BitpayloadToCodewords, SplitDataCodewordsV4Q, GenFormatInformation, ErrorCorrectionLevel, MaskPattern } from 'imhere-qgen/lib/encoding'
+import { Term, ParsePolynomial, PolynomialToBitString } from 'imhere-qgen/lib/polymath'
 
 const Attendance = () => {
-    const spayload = 'deez snuts'
-    const payload = GenPayload(spayload, GenV4ECIheader)
-    console.log('payload', payload)
+    // const spayload = 'https://imhere.csh.rit.edu/imhere&eventid=234567890987654321&state=0'
+    // // 68 chars max for now...
+    // const payload = GenV4Payload(spayload)
+    // //console.log('payload', payload)
+    // const codewords = BitpayloadToCodewords(payload)
+    // console.log(`codewords for ${spayload} (${spayload.length} chars)`, codewords)
+    // const blocks = SplitDataCodewordsV4Q(codewords)
+    // console.log(`blocks for ${spayload}`, blocks)
+
+    const spoly = '45x^4+x^2+x+1'
+    const poly = ParsePolynomial(spoly)
+    console.log(`poly for ${spoly}`, poly)
+
+    const BCH155 = 'x^10+x^8+x^5+x^4+x^2+x+1'
+    const bitFromPoly = PolynomialToBitString(BCH155)
+    console.log(`bitFromPoly for ${BCH155}`, bitFromPoly)
+
+    const formatInfo = GenFormatInformation(ErrorCorrectionLevel.L, MaskPattern.M100)
+    console.log(`FormatInfo bits for level L and pattern M100`, formatInfo)
+    const formatInfoBitString = new Array<number>(0)
+    formatInfo.forEach(e => formatInfoBitString.push(e ? 1 : 0))
+    console.log('FormatInfo in bit form', formatInfoBitString.join(''))
 
     return (
         <Card>
