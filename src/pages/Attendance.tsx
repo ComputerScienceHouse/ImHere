@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, CardBody, CardSubtitle, CardTitle } from 'reactstrap'
 import './Attendance.tsx.scss'
 import { QrRenderer, } from 'imhere-qgen'
-import { GenV4Payload, BitpayloadToCodewords, SplitDataCodewordsV4Q } from 'imhere-qgen/lib/encoding'
+import { GenV4Payload, BitpayloadToCodewords, SplitDataCodewordsV4Q, GenFormatInformation, ErrorCorrectionLevel, MaskPattern } from 'imhere-qgen/lib/encoding'
 import { Term, ParsePolynomial, PolynomialToBitString } from 'imhere-qgen/lib/polymath'
 
 const Attendance = () => {
@@ -22,6 +22,12 @@ const Attendance = () => {
     const BCH155 = 'x^10+x^8+x^5+x^4+x^2+x+1'
     const bitFromPoly = PolynomialToBitString(BCH155)
     console.log(`bitFromPoly for ${BCH155}`, bitFromPoly)
+
+    const formatInfo = GenFormatInformation(ErrorCorrectionLevel.L, MaskPattern.M100)
+    console.log(`FormatInfo bits for level L and pattern M100`, formatInfo)
+    const formatInfoBitString = new Array<number>(0)
+    formatInfo.forEach(e => formatInfoBitString.push(e ? 1 : 0))
+    console.log('FormatInfo in bit form', formatInfoBitString.join(''))
 
     return (
         <Card>
