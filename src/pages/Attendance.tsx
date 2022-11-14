@@ -23,11 +23,9 @@ const Attendance = () => {
     const bitFromPoly = PolynomialToBitString(BCH155)
     console.log(`bitFromPoly for ${BCH155}`, bitFromPoly)
 
-    const formatInfo = GenFormatInformation(ErrorCorrectionLevel.L, MaskPattern.M100)
-    console.log(`FormatInfo bits for level L and pattern M100`, formatInfo)
-    const formatInfoBitString = new Array<number>(0)
-    formatInfo.forEach(e => formatInfoBitString.push(e ? 1 : 0))
-    console.log('FormatInfo in bit form', formatInfoBitString.join(''))
+    const formatInfo = GenFormatInformation(ErrorCorrectionLevel.M, MaskPattern.M110)
+    console.log(`FormatInfo bits for level M and pattern M110`, formatInfo)
+    console.log('FormatInfo in bit form', formatInfo.map(e => e ? 1 : 0).join(''))
 
     return (
         <Card>

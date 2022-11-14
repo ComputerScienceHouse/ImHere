@@ -1,17 +1,9 @@
-OM node:12.17.0-alpine
-WORKDIR /usr
-COPY package.json ./
-COPY tsconfig.json ./
-COPY src ./src
-RUN ls -a
-RUN npm install
+FROM node:19-alpine3.15 as builder
+WORKDIR /app
+COPY . .
+RUN npm ci
 RUN npm run build
-## this is stage two , where the app actually runs
-FROM node:12.17.0-alpine
-WORKDIR /usr
-COPY package.json ./
-RUN npm install --only=production
-COPY --from=0 /usr/dist .
-RUN npm install pm2 -g
-EXPOSE 80
-CMD ["pm2-runtime","app.js"]
+ENV NODE_ENV=production
+ENV PORT=8080
+EXPOSE 8080
+CMD ["npx", "serve", "build"]
