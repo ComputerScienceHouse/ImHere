@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, CardBody, CardSubtitle, CardTitle } from 'reactstrap'
 import './Attendance.tsx.scss'
 import { QrRenderer, } from 'imhere-qgen'
-import { GenV4Payload, BitpayloadToCodewords, SplitDataCodewordsV4Q, GenFormatInformation, ErrorCorrectionLevel, MaskPattern } from 'imhere-qgen/lib/encoding'
+import { GenV4Payload, SplitDataCodewordsV4Q, GenFormatInformation, ErrorCorrectionLevel, MaskPattern } from 'imhere-qgen/lib/encoding'
 import { Term, ParsePolynomial, PolynomialToBitString } from 'imhere-qgen/lib/polymath'
 
 const Attendance = () => {
