@@ -217,7 +217,7 @@ const getCurrentDatabaseDomain = (database, url) => {
                 let domain = domainsToSendTokens[i];
 
                 if (typeof domain === 'string') {
-                    domain = new RegExp(`^${domain}`, 'gm');
+                    domain = new RegExp(`^${domain}`);
                 }
 
                 if (domain.test?.(url)) {
@@ -286,6 +286,7 @@ const handleFetch = async (event) => {
                 ...serializeHeaders(originalRequest.headers),
                 authorization: 'Bearer ' + currentDatabaseForRequestAccessToken.tokens.access_token,
             },
+            mode: currentDatabaseForRequestAccessToken.oidcConfiguration.service_worker_convert_all_requests_to_cors ? "cors" : originalRequest.mode,
         });
         event.waitUntil(event.respondWith(fetch(newRequest)));
         return;
@@ -393,7 +394,7 @@ const checkDomain = (domains, endpoint) => {
         let testable = domain;
 
         if (typeof domain === 'string') {
-            testable = new RegExp(`^${domain}`, 'gm');
+            testable = new RegExp(`^${domain}`);
         }
 
         return testable.test?.(endpoint);
