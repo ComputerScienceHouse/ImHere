@@ -10,7 +10,7 @@
     "@types/jest": "^29.5.1",
     "@types/node": "^18.15.11",
     "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.0.10",
+    "@types/react-dom": "^18.2.6",
     "bootstrap": "^5.2.3",
     "csh-material-bootstrap": "^4.5.2",
     "react": "^18.2.0",
