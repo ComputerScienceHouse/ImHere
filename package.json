@@ -19,7 +19,7 @@
     "react-router-dom": "^6.10.0",
     "react-scripts": "^5.0.1",
     "reactstrap": "^9.2.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.6"
   },
   "scripts": {
     "start": "react-scripts start",
