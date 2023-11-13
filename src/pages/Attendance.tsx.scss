@@ -6,3 +6,25 @@
     border: 3px solid;
     border-radius: 10px;
 }
+
+.create-qr {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 10%;
+}
+
+.eventname {
+    text-align: center;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.input-container {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+}
