@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, CardBody, CardSubtitle, CardTitle, Input } from 'reactstrap'
+import { Card, CardBody, CardSubtitle, CardText, CardTitle, Input } from 'reactstrap'
 import './Attendance.tsx.scss'
 import { QrRenderer } from 'imhere-qgen'
 import { Request } from '../Fetch'
@@ -11,7 +11,7 @@ interface Event {
 
 const Attendance = () => {
     const baseApiUri = 'https://localhost:7161/api/'
-    const [payload, setPayload] = useState('https://localhost:3000/attendance/')
+    const [payload, setPayload] = useState('http://localhost:3000/signin/')
     const [event, setEvent] = useState<Event>({ Name: '' })
     const [qrReady, setQrReady] = useState(false)
     const [errMsg, setErrMsg] = useState('')
@@ -20,7 +20,7 @@ const Attendance = () => {
         setErrMsg('')
         return await Request<number, Event>(baseApiUri + 'attendance', { method: 'POST' }, { Name: event.Name })
             .then(assignedID => {
-                setPayload(`https://localhost:3000/attendance/${assignedID}`)
+                setPayload(`http://localhost:3000/signin/${assignedID}`)
                 setEvent({ ID: assignedID, Name: event.Name })
                 setQrReady(true)
             }).catch(err => {
@@ -33,16 +33,14 @@ const Attendance = () => {
         <Card>
             <CardBody>
                 <CardTitle tag='h1'>Generate Attendance QR Code</CardTitle>
-                <CardSubtitle className='mb-2 text-muted' tag='h6'>Add your event name below:</CardSubtitle>
-                <p>TODO: add dropdown with events</p>
-                <h3>Qr Debugging:</h3>
                 {qrReady ?
                     <>
-                        <p>Event: {event?.Name}</p>
+                        <CardText tag='h3'>Event {event.ID}: {event?.Name}</CardText>
                         <a href={payload}>Sign In Link</a>
                         <QrRenderer squareLength={10} payload={payload} />
                     </> :
                     <div style={{ width: '100%', height: '60vh' }}>
+                        <CardSubtitle className='mb-2 text-muted' tag='h6'>Add your event name below:</CardSubtitle>
                         <div className='create-qr'>
                             <label htmlFor='event-name' className='eventname w-25 lead'>Event Name:</label>
                             <div className='input-container'>
