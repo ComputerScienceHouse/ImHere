@@ -40,7 +40,7 @@ const Home = () => {
           <Link className='btn btn-primary btn-lg' to='/attendance' role='button'>Generate attendance QR code</Link>
         </p>
         <div className='footer'>
-          <a href={lastCommit}>{commitHash.slice(0, 8)}</a>
+          <a href={lastCommit}>ImHere ({commitHash.slice(0, 7)})</a>
         </div>
       </div>
     </div>

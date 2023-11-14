@@ -16,20 +16,18 @@ const Attendance = () => {
     const [qrReady, setQrReady] = useState(false)
     const [errMsg, setErrMsg] = useState('')
 
-    // setup effect to create attendance qr code
-    // useEffect(() => {
-
-    // }, [])
-
-    const getEvent = async () => Request<number, Event>(baseApiUri + 'attendance', { method: 'POST' }, { Name: "Test Event" })
-        .then(assignedID => {
-            setPayload(`https://localhost:3000/attendance/${assignedID}`)
-            setEvent({ ID: assignedID, Name: "Test Event" })
-            setQrReady(true)
-        }).catch(err => {
-            console.error(`Error creating event: POST ${baseApiUri + 'attendance'}: ${err.message}`)
-            setErrMsg(`Error creating event: POST ${baseApiUri + 'attendance'}: ${err.message}. API may be down or temporarily unavailable.`)
-        })
+    const getEvent = async () => {
+        setErrMsg('')
+        return await Request<number, Event>(baseApiUri + 'attendance', { method: 'POST' }, { Name: event.Name })
+            .then(assignedID => {
+                setPayload(`https://localhost:3000/attendance/${assignedID}`)
+                setEvent({ ID: assignedID, Name: event.Name })
+                setQrReady(true)
+            }).catch(err => {
+                console.error(`Error creating event: POST ${baseApiUri + 'attendance'}: ${err.message}`)
+                setErrMsg(`Error creating event: POST ${baseApiUri + 'attendance'}: ${err.message}. API may be down or temporarily unavailable.`)
+            })
+    }
 
     return (
         <Card>
@@ -41,6 +39,7 @@ const Attendance = () => {
                 {qrReady ?
                     <>
                         <p>Event: {event?.Name}</p>
+                        <a href={payload}>Sign In Link</a>
                         <QrRenderer squareLength={10} payload={payload} />
                     </> :
                     <div style={{ width: '100%', height: '60vh' }}>
@@ -48,7 +47,7 @@ const Attendance = () => {
                             <label htmlFor='event-name' className='eventname w-25 lead'>Event Name:</label>
                             <div className='input-container'>
                                 <Input type='text' value={event?.Name} onChange={e => {
-                                    const text = e.target.value
+                                    const text = e.target.value.trim()
                                     if (text.length === 0) {
                                         setErrMsg('Event name cannot be empty')
                                         setEvent({ Name: '' })
@@ -62,7 +61,9 @@ const Attendance = () => {
                                     : null
                                 }
                             </div>
-                            <button className='btn btn-primary btn-sm w-25 ml-5 mt-2 mb-2' onClick={getEvent}>Create</button>
+                            <button className='btn btn-primary btn-sm w-25 ml-5 mt-2 mb-2' onClick={
+                                event.Name.length !== 0 ? getEvent : () => { setErrMsg('Event name cannot be empty') }
+                            }>Create</button>
                         </div>
                     </div>
                 }
