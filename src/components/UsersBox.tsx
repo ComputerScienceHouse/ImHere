@@ -12,14 +12,14 @@ interface UserBoxProps {
 
 }
 
-const UserBox: React.FC<UserBoxProps> = ({ userInfo, key }) => {
+const UserBox: React.FC<UserBoxProps> = ({ userInfo }) => {
     const [isHover, setIsHover] = useState(false)
     const getUserboxPfpStyle = (src: string): React.CSSProperties => {
         return {
             width: '40px',
             height: '40px',
             marginRight: '5px',
-            backgroundImage: `url(${src}) 0 0 no-repeat fixed`,
+            backgroundImage: `url(${src})`,
             backgroundSize: 'cover',
             borderRadius: '50%',
         }
@@ -30,7 +30,7 @@ const UserBox: React.FC<UserBoxProps> = ({ userInfo, key }) => {
     }
 
     return (
-        <div key={key} className='userbox'
+        <div className='userbox'
             onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
             <div className='userbox-pfp' style={getUserboxPfpStyle(`https://profiles.csh.rit.edu/image/${userInfo.preferred_username}`)}
                 onClick={() => banUser()}>
