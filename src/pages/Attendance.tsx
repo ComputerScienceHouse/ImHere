@@ -22,7 +22,6 @@ const Attendance = () => {
     const { accessTokenPayload } = useOidcAccessToken()
     const userInfo = accessTokenPayload as UserInfo
 
-
     const testUsers: UserInfo[] = []
     for (let i = 0; i < 7; i++)
         testUsers.push(structuredClone(userInfo))
@@ -47,7 +46,6 @@ const Attendance = () => {
     testUsers[6].family_name = 'Simonson'
     const [users, setUsers] = useState<UserInfo[]>(testUsers)
 
-
     const getEvent = async () => {
         setErrMsg('')
         return await Request<number, Event>(baseApiUri + 'attendance', { method: 'POST' }, { Name: event.Name })
@@ -71,7 +69,7 @@ const Attendance = () => {
                         <a href={payload}>Sign In Link</a>
                         <div className='d-flex flex-row'>
                             <QrRenderer squareLength={10} payload={payload} />
-                            <UsersBox users={users} />
+                            <UsersBox users={users} setUsers={setUsers} attendanceID={event.ID!} setQrReady={setQrReady} setErrMsg={setErrMsg} />
                         </div>
                     </> :
                     <>

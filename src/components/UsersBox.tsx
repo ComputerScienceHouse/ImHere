@@ -1,9 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import UserInfo from '../UserInfo'
 import './UsersBox.tsx.scss'
+import { rtcApiUrl, startConnection } from '../Connection'
+import { sendMessage } from '@microsoft/signalr/dist/esm/Utils'
+
 
 interface Props {
-    users: UserInfo[]
+    users: UserInfo[],
+    setUsers: React.Dispatch<React.SetStateAction<UserInfo[]>>,
+    attendanceID: number,
+    setQrReady: React.Dispatch<React.SetStateAction<boolean>>,
+    setErrMsg: React.Dispatch<React.SetStateAction<string>>
 }
 
 interface UserBoxProps {
@@ -43,11 +50,27 @@ const UserBox: React.FC<UserBoxProps> = ({ userInfo }) => {
     )
 }
 
-const UsersBox: React.FC<Props> = ({ users }) => {
+const UsersBox: React.FC<Props> = ({ users, setUsers, attendanceID, setErrMsg, setQrReady }) => {
+    const [rtcConnected, setRtcConnected] = useState(false)
+
+    useEffect(() => {
+        startConnection((member) => setUsers(users => [...users, member]))
+            .then(() => {
+                setRtcConnected(true)
+            }).catch(err => {
+                console.error(`Failed to start signalR connection: ${err.message}`)
+                setErrMsg(`Failed to start signalR connection on ${rtcApiUrl}: ${err.message}`)
+                setQrReady(false)
+            })
+    })
     return (
-        <div className='usersbox-container'>
-            {users.map((userInfo, key) => <UserBox userInfo={userInfo} key={key} />)}
-        </div>
+        <> {rtcConnected ?
+            <div className='usersbox-container'>
+                {users.map((userInfo, key) => <UserBox userInfo={userInfo} key={key} />)}
+            </div> :
+            <div>Connecting to signalR hub on {rtcApiUrl}...</div>
+        }
+        </>
     )
 }
 
