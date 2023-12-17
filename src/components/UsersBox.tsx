@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import UserInfo from '../UserInfo'
 import './UsersBox.tsx.scss'
 import { rtcApiUrl, startConnection } from '../Connection'
-import { sendMessage } from '@microsoft/signalr/dist/esm/Utils'
+import { Event } from '../pages/Attendance'
 
 
 interface Props {
     users: UserInfo[],
+    host: UserInfo,
     setUsers: React.Dispatch<React.SetStateAction<UserInfo[]>>,
-    attendanceID: number,
+    event: Event,
     setQrReady: React.Dispatch<React.SetStateAction<boolean>>,
     setErrMsg: React.Dispatch<React.SetStateAction<string>>
 }
@@ -50,19 +51,23 @@ const UserBox: React.FC<UserBoxProps> = ({ userInfo }) => {
     )
 }
 
-const UsersBox: React.FC<Props> = ({ users, setUsers, attendanceID, setErrMsg, setQrReady }) => {
+const UsersBox: React.FC<Props> = ({ users, setUsers, event, setErrMsg, setQrReady, host }) => {
     const [rtcConnected, setRtcConnected] = useState(false)
 
     useEffect(() => {
-        startConnection((member) => setUsers(users => [...users, member]))
+        startConnection(event, (member) => {
+            console.log(`Member ${member.preferred_username} joined`)
+            setUsers(users => [...users, member])
+        })
             .then(() => {
                 setRtcConnected(true)
-            }).catch(err => {
+            })
+            .catch(err => {
                 console.error(`Failed to start signalR connection: ${err.message}`)
                 setErrMsg(`Failed to start signalR connection on ${rtcApiUrl}: ${err.message}`)
                 setQrReady(false)
             })
-    })
+    }, [event, setErrMsg, setQrReady, setUsers])
     return (
         <> {rtcConnected ?
             <div className='usersbox-container'>
